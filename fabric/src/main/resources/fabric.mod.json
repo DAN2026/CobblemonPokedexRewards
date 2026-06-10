@@ -1,0 +1,22 @@
+{
+  "schemaVersion": 1,
+  "id": "cobblemonpokedexrewards",
+  "version": "${version}",
+  "name": "Cobblemon: Pokédex Rewards",
+  "description": "A Cobblemon Side-Mod that introduces configurable rewards for capturing cobblemon.",
+  "authors": [
+    "DAN2026"
+  ],
+  "license": "All Rights Reserved",
+  "icon": "assets/example/icon.png",
+  "environment": "*",
+  "entrypoints": {
+    "main": [
+      "net.dan2026.cobblemonpokedexrewards.fabric.PokedexRewardsFabric"
+    ]
+  },
+  "depends": {
+    "minecraft": "1.21.1",
+    "cobblemon": ">=1.7.3 <1.8.0"
+  }
+}

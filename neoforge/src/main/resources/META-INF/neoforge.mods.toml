@@ -1,0 +1,35 @@
+modLoader = "javafml"
+loaderVersion = "[1,)"
+#issueTrackerURL = "A valid URL to your issue tracker where people can open bug tickets"
+license = "MIT License"
+
+[[mods]]
+modId = "cobblemonpokedexrewards"
+version = "${version}"
+displayName = "Cobblemon: Pokédex Rewards"
+authors = "DAN2027"
+description = '''
+A Cobblemon Side-Mod that introduces configurable rewards for capturing cobblemon.
+'''
+#logoFile = ""
+
+[[dependencies.cobblemonpokedexrewards]]
+modId = "minecraft"
+mandatory = true
+versionRange = "[1.21.1]"
+ordering = "NONE"
+side = "BOTH"
+
+[[dependencies.cobblemonpokedexrewards]]
+modId = "neoforge"
+mandatory = true
+versionRange = "[21.1.182,)"
+ordering = "NONE"
+side = "BOTH"
+
+[[dependencies.cobblemonpokedexrewards]]
+modId = "cobblemon"
+mandatory = true
+versionRange = "[1.7.3,)"
+ordering = "AFTER"
+side = "BOTH"
