@@ -13,6 +13,9 @@
   "entrypoints": {
     "main": [
       "net.dan2026.cobblemonpokedexrewards.fabric.PokedexRewardsFabric"
+    ],
+    "client": [
+      "net.dan2026.cobblemonpokedexrewards.fabric.PokedexRewardsFabricClient"
     ]
   },
   "depends": {

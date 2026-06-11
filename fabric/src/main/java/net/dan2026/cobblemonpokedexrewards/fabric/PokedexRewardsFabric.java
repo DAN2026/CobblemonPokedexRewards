@@ -1,12 +1,11 @@
 package net.dan2026.cobblemonpokedexrewards.fabric;
 
-import net.dan2026.cobblemonpokedexrewards.common.events.ClientEvents;
-import net.fabricmc.api.ClientModInitializer;
+import net.fabricmc.api.ModInitializer;
 
-public class PokedexRewardsFabric implements ClientModInitializer {
+public class PokedexRewardsFabric implements ModInitializer {
 
     @Override
-    public void onInitializeClient() {
-        ClientEvents.init();
+    public void onInitialize() {
+
     }
 }
