@@ -5,7 +5,7 @@ import net.dan2026.cobblemonpokedexrewards.common.PokedexRewards;
 
 public class ClientEvents {
 
-    public static void init() {
+    public static void register() {
 
         ClientGuiEvent.RENDER_HUD.register((graphics, tickDelta) -> {
             PokedexRewards.render(graphics);

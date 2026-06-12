@@ -12,7 +12,7 @@
   "environment": "*",
   "entrypoints": {
     "main": [
-      "net.dan2026.cobblemonpokedexrewards.fabric.PokedexRewardsFabric"
+      "net.dan2026.cobblemonpokedexrewards.fabric.PokedexRewardsFabricServer"
     ],
     "client": [
       "net.dan2026.cobblemonpokedexrewards.fabric.PokedexRewardsFabricClient"
