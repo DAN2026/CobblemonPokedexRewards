@@ -13,6 +13,9 @@ loom {
     enableTransitiveAccessWideners.set(true)
     silentMojangMappingsLicense()
 
+//    mixin.useLegacyMixinAp.set(true)
+//    mixin.defaultRefmapName.set("cobblemonpokedexrewards-neoforge-refmap.json")
+
     runs {
         named("client") {
             configName = "Client: Forge 1"

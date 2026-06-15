@@ -7,7 +7,9 @@ public class PokedexRewardsFabricClient implements ClientModInitializer {
 
     @Override
     public void onInitializeClient() {
+
         ClientEvents.register();
+
     }
 
 }

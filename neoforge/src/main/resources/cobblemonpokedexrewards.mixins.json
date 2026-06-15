@@ -1,0 +1,12 @@
+{
+  "required": true,
+  "package": "net.dan2026.cobblemonpokedexrewards.forge.mixins",
+  "compatibilityLevel": "JAVA_21",
+  "mixins": [],
+  "client": [
+    "PokedexGUIMixin"
+  ],
+  "injectors": {
+    "defaultRequire": 1
+  }
+}

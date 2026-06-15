@@ -14,6 +14,8 @@ loom {
     silentMojangMappingsLicense()
 
 
+//    mixin.useLegacyMixinAp.set(true)
+
     runs {
         named("client") {
             configName = "Client: Fabric 1"
@@ -34,7 +36,7 @@ loom {
     }
 
     mixin {
-        defaultRefmapName.set("mixins.${project.name}.refmap.json")
+        defaultRefmapName.set("cobblemonpokedexrewards-fabric-refmap.json")
     }
 }
 

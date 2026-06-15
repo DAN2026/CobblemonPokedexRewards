@@ -13,6 +13,9 @@ A Cobblemon Side-Mod that introduces configurable rewards for capturing cobblemo
 '''
 #logoFile = ""
 
+[[mixins]]
+config = "cobblemonpokedexrewards.mixins.json"
+
 [[dependencies.cobblemonpokedexrewards]]
 modId = "minecraft"
 mandatory = true
