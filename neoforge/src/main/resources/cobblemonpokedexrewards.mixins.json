@@ -4,7 +4,7 @@
   "compatibilityLevel": "JAVA_21",
   "mixins": [],
   "client": [
-    "PokedexRewardsGUI"
+    "PokedexScreenMixin"
   ],
   "injectors": {
     "defaultRequire": 1
