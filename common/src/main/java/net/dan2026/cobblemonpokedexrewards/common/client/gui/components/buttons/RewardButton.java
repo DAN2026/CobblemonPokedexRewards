@@ -79,7 +79,6 @@ public final class RewardButton extends Button implements PokedexComponent, Clic
         int posY = this.getY();
 
         renderIcon(context, posX, posY);
-        renderClickableArea(context, posX, posY);
     }
 
     /**
@@ -173,5 +172,11 @@ public final class RewardButton extends Button implements PokedexComponent, Clic
         );
 
         logClick(" Reward Button clicked at {}", TimeUtils.getFormattedCurrentTime());
+
+        /*
+        We need to open the screen here, preferable it will be the same as the cobblemon Pokédex
+        Then we will need to ensure the Pokédex screen is empty.
+         */
+
     }
 }

@@ -19,7 +19,7 @@ import net.dan2026.cobblemonpokedexrewards.common.PokedexRewards;
 
 
 @EventBusSubscriber(modid = PokedexRewards.MOD_ID, value = Dist.CLIENT)
-public class PokedexRewardsForgeClient {
+public class Client {
 
     @SubscribeEvent
     public static void onClientSetup(FMLClientSetupEvent event) {

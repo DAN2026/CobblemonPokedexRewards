@@ -13,9 +13,9 @@ import net.dan2026.cobblemonpokedexrewards.common.PokedexRewards;
 import net.neoforged.fml.common.Mod;
 
 @Mod(PokedexRewards.MOD_ID)
-public class PokedexRewardsForgeServer {
+public class Server {
 
-    public PokedexRewardsForgeServer() {
+    public Server() {
 
     }
 
