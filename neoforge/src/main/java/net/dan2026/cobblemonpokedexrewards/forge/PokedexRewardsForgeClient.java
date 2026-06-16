@@ -1,6 +1,6 @@
 package net.dan2026.cobblemonpokedexrewards.forge;
 
-import net.dan2026.cobblemonpokedexrewards.common.events.ClientEvents;
+import net.dan2026.cobblemonpokedexrewards.common.client.events.ClientEvents;
 import net.neoforged.api.distmarker.Dist;
 import net.neoforged.bus.api.SubscribeEvent;
 import net.neoforged.fml.common.EventBusSubscriber;

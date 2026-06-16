@@ -1,7 +1,6 @@
-package net.dan2026.cobblemonpokedexrewards.common.events;
+package net.dan2026.cobblemonpokedexrewards.common.client.events;
 
 import dev.architectury.event.events.client.ClientGuiEvent;
-import net.dan2026.cobblemonpokedexrewards.common.gui.ClientGui;
 
 public class ClientEvents {
 
