@@ -9,41 +9,39 @@
 
 package net.dan2026.cobblemonpokedexrewards.common.client.gui.components.buttons;
 
+import com.cobblemon.mod.common.CobblemonSounds;
 import com.cobblemon.mod.common.api.gui.GuiUtilsKt;
-import com.cobblemon.mod.common.client.CobblemonResources;
-import com.cobblemon.mod.common.client.render.RenderHelperKt;
 import net.dan2026.cobblemonpokedexrewards.common.api.Clickable;
 import net.dan2026.cobblemonpokedexrewards.common.api.PokedexComponent;
 import net.dan2026.cobblemonpokedexrewards.common.util.TimeUtils;
+import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.client.gui.components.Button;
+import net.minecraft.client.resources.sounds.SimpleSoundInstance;
 import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceLocation;
 import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.TestOnly;
 
 
 /**
  * Reward button for the Pokedex.
  */
 
-public final class RewardBtn extends Button implements PokedexComponent, Clickable {
+public final class RewardButton extends Button implements PokedexComponent, Clickable {
 
-    private static final ResourceLocation UNHOVERED_ICON = ResourceLocation.fromNamespaceAndPath("cobblemonpokedexrewards", "textures/gui/reward_icon.png");
-    private static final ResourceLocation HOVERED_ICON = ResourceLocation.fromNamespaceAndPath("cobblemonpokedexrewards", "textures/gui/test.png");
+    private static final ResourceLocation UNHOVERED_ICON = ResourceLocation.fromNamespaceAndPath("cobblemonpokedexrewards", "textures/gui/reward_icon_unhovered.png");
+    private static final ResourceLocation HOVERED_ICON = ResourceLocation.fromNamespaceAndPath("cobblemonpokedexrewards", "textures/gui/reward_icon_hovered.png");
 
-    private static final int BUTTON_WIDTH = 50;
+    private static final ResourceLocation TEST_TEXTURE = ResourceLocation.fromNamespaceAndPath("cobblemonpokedexrewards", "textures/gui/test.png");
+
+    private static final int BUTTON_WIDTH = 11;
     private static final int BUTTON_HEIGHT = 11;
     private static final int ICON_SIZE = 14;
-    private static final int ICON_X_OFFSET = 5;
+    private static final int ICON_X_OFFSET = 2;
     private static final int ICON_Y_OFFSET = 2;
-    private static final int TEXT_X_OFFSET = 15;
-    private static final int TEXT_Y_OFFSET = 1;
     private static final int Z_LEVEL = 100;
     private static final float ICON_SCALE = 0.5f;
-    private static final float TEXT_SCALE = 1.0f;
-    private static final int MAX_WIDTH = Integer.MAX_VALUE;
-    private static final int TEXT_COLOR = 0xFFFFFF;
-
     /**
      * Initialises a new Reward button at the specified coordinates.
      *
@@ -51,7 +49,7 @@ public final class RewardBtn extends Button implements PokedexComponent, Clickab
      * @param posY The y coordinate for the button.
      */
 
-    public RewardBtn(int posX, int posY) {
+    public RewardButton(int posX, int posY) {
         super(
                 posX,
                 posY,
@@ -81,7 +79,7 @@ public final class RewardBtn extends Button implements PokedexComponent, Clickab
         int posY = this.getY();
 
         renderIcon(context, posX, posY);
-        renderText(context, posX, posY);
+        renderClickableArea(context, posX, posY);
     }
 
     /**
@@ -111,6 +109,7 @@ public final class RewardBtn extends Button implements PokedexComponent, Clickab
      */
 
     private void renderIcon(GuiGraphics context, int posX, int posY) {
+
         ResourceLocation activeIcon = (this.isHovered) ? HOVERED_ICON : UNHOVERED_ICON;
 
         context.pose().pushPose();
@@ -139,29 +138,27 @@ public final class RewardBtn extends Button implements PokedexComponent, Clickab
         context.pose().popPose();
     }
 
-    /**
-     * Renders the text associated with the button.
+        /**
+     * Renders the clickable area using a test texture.
      *
      * @param context The GuiGraphics instance.
      * @param posX The starting x position.
      * @param posY The starting y position.
      */
 
-    private void renderText(GuiGraphics context, int posX, int posY) {
-        RenderHelperKt.drawScaledText(
-                context,
-                CobblemonResources.INSTANCE.getDEFAULT_LARGE(),
-                Component.literal("Rewards").withStyle(style -> style.withBold(true)),
-                posX + TEXT_X_OFFSET,
-                posY + ICON_Y_OFFSET - TEXT_Y_OFFSET,
-                TEXT_SCALE,
-                TEXT_SCALE,
-                MAX_WIDTH,
-                TEXT_COLOR,
-                false,
-                true,
-                null,
-                null
+    @TestOnly
+    private void renderClickableArea(GuiGraphics context, int posX, int posY){
+
+        context.blit(
+                TEST_TEXTURE,
+                posX,
+                posY,
+                0,
+                0,
+                BUTTON_WIDTH,
+                BUTTON_HEIGHT,
+                16,
+                16
         );
     }
 
@@ -170,6 +167,11 @@ public final class RewardBtn extends Button implements PokedexComponent, Clickab
      */
 
     public void onClick() {
-        logClick("Button clicked at {}", TimeUtils.getFormattedCurrentTime());
+
+        Minecraft.getInstance().getSoundManager().play(
+                SimpleSoundInstance.forUI(CobblemonSounds.POKEDEX_CLICK_SHORT, 1.0f)
+        );
+
+        logClick(" Reward Button clicked at {}", TimeUtils.getFormattedCurrentTime());
     }
 }

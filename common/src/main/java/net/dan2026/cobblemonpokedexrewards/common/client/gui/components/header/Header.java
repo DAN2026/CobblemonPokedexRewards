@@ -14,6 +14,7 @@ import net.dan2026.cobblemonpokedexrewards.common.api.PokedexComponent;
 import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.resources.ResourceLocation;
 
+@Deprecated
 public class Header implements PokedexComponent {
 
     private static final ResourceLocation HEADER =

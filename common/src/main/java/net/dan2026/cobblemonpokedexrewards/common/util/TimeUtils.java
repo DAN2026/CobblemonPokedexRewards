@@ -16,7 +16,7 @@ import java.time.format.DateTimeFormatter;
 
 
     /**
-     * Utility class for time-related operations.
+     * Utility class for time-related functions.
      */
 
 public final class TimeUtils {
@@ -25,10 +25,10 @@ public final class TimeUtils {
      * Formatter for the requested pattern: dd/mm/yy : hh/mm/ss
      */
 
-    private static final DateTimeFormatter FORMATTER = DateTimeFormatter.ofPattern("dd/MM/yy : HH/mm/ss");
+    private static final DateTimeFormatter FORMATTER = DateTimeFormatter.ofPattern("dd/MM/yy:HH/mm/ss");
 
     // To stop instantiation
-        
+
     private TimeUtils() {}
 
     /**
