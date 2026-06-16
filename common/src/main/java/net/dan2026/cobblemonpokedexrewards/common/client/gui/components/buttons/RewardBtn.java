@@ -1,9 +1,20 @@
+/*
+ * CobblemonPokedexRewards - A NeoForge Minecraft Mod.
+ *
+ * Copyright (c) 2026 DAN2026. All rights reserved.
+ * * This software is licensed under the CobblemonPokedexRewards License v1.0.
+ * A copy of this license should have been included with this software.
+ * If not, you can obtain a copy at [Link to your License/Repository].
+ */
+
 package net.dan2026.cobblemonpokedexrewards.common.client.gui.components.buttons;
 
 import com.cobblemon.mod.common.api.gui.GuiUtilsKt;
 import com.cobblemon.mod.common.client.CobblemonResources;
 import com.cobblemon.mod.common.client.render.RenderHelperKt;
+import net.dan2026.cobblemonpokedexrewards.common.api.Clickable;
 import net.dan2026.cobblemonpokedexrewards.common.api.PokedexComponent;
+import net.dan2026.cobblemonpokedexrewards.common.util.TimeUtils;
 import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.client.gui.components.Button;
 import net.minecraft.network.chat.Component;
@@ -15,7 +26,7 @@ import org.jetbrains.annotations.NotNull;
  * Reward button for the Pokedex.
  */
 
-public final class RewardBtn extends Button implements PokedexComponent {
+public final class RewardBtn extends Button implements PokedexComponent, Clickable {
 
     private static final ResourceLocation UNHOVERED_ICON = ResourceLocation.fromNamespaceAndPath("cobblemonpokedexrewards", "textures/gui/reward_icon.png");
     private static final ResourceLocation HOVERED_ICON = ResourceLocation.fromNamespaceAndPath("cobblemonpokedexrewards", "textures/gui/test.png");
@@ -47,7 +58,7 @@ public final class RewardBtn extends Button implements PokedexComponent {
                 BUTTON_WIDTH,
                 BUTTON_HEIGHT,
                 Component.empty(),
-                button -> onClick(),
+                btn -> ((Clickable) btn).onClick(),
                 (button) -> Component.empty()
         );
 
@@ -158,7 +169,7 @@ public final class RewardBtn extends Button implements PokedexComponent {
      * Handles the click action for the reward button.
      */
 
-    private static void onClick() {
-        System.out.println("Rewards Tab Button Clicked");
+    public void onClick() {
+        logClick("Button clicked at {}", TimeUtils.getFormattedCurrentTime());
     }
 }

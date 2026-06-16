@@ -34,7 +34,7 @@ public interface PokedexComponent {
      */
 
     default void logInitialization() {
-        LOGGER.debug("Component: {} has been initialized.", getComponentName());
+        LOGGER.info("Component: {} has been initialized.", getComponentName());
     }
 
 }
