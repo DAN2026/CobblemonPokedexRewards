@@ -11,8 +11,11 @@ package net.dan2026.cobblemonpokedexrewards.common.client.gui.components.buttons
 
 import com.cobblemon.mod.common.CobblemonSounds;
 import com.cobblemon.mod.common.api.gui.GuiUtilsKt;
+import com.cobblemon.mod.common.client.pokedex.PokedexType;
+import com.cobblemon.mod.common.item.PokedexItem;
 import net.dan2026.cobblemonpokedexrewards.common.api.Clickable;
 import net.dan2026.cobblemonpokedexrewards.common.api.PokedexComponent;
+import net.dan2026.cobblemonpokedexrewards.common.client.gui.components.screen.RewardsScreen;
 import net.dan2026.cobblemonpokedexrewards.common.util.TimeUtils;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.GuiGraphics;
@@ -20,6 +23,8 @@ import net.minecraft.client.gui.components.Button;
 import net.minecraft.client.resources.sounds.SimpleSoundInstance;
 import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceLocation;
+import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.item.ItemStack;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.TestOnly;
 
@@ -178,5 +183,18 @@ public final class RewardButton extends Button implements PokedexComponent, Clic
         Then we will need to ensure the Pokédex screen is empty.
          */
 
+        openRewardScreen();
+
     }
+
+    private void openRewardScreen() {
+
+        Minecraft mc = Minecraft.getInstance();
+
+        mc.setScreen(new RewardsScreen());
+    }
+
+
+
+
 }
