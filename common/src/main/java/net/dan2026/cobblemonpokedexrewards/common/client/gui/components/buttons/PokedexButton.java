@@ -14,11 +14,8 @@ package net.dan2026.cobblemonpokedexrewards.common.client.gui.components.buttons
 
 import com.cobblemon.mod.common.CobblemonSounds;
 import com.cobblemon.mod.common.api.gui.GuiUtilsKt;
-import com.cobblemon.mod.common.client.pokedex.PokedexType;
-import com.cobblemon.mod.common.item.PokedexItem;
 import net.dan2026.cobblemonpokedexrewards.common.api.Clickable;
 import net.dan2026.cobblemonpokedexrewards.common.api.PokedexComponent;
-import net.dan2026.cobblemonpokedexrewards.common.client.gui.components.screen.RewardsScreen;
 import net.dan2026.cobblemonpokedexrewards.common.util.TimeUtils;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.GuiGraphics;
@@ -30,27 +27,21 @@ import net.minecraft.resources.ResourceLocation;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.TestOnly;
 
+import static com.cobblemon.mod.common.util.MiscUtilsKt.cobblemonResource;
+
 
 /**
- * Reward button for the Pokedex.
+ * Pokedex button for the Pokedex.
  */
 
-public final class RewardButton extends Button implements PokedexComponent, Clickable {
+public final class PokedexButton extends Button implements PokedexComponent, Clickable {
 
-    private static final ResourceLocation UNHOVERED_ICON = ResourceLocation.fromNamespaceAndPath("cobblemonpokedexrewards", "textures/gui/reward_icon_unhovered.png");
-    private static final ResourceLocation HOVERED_ICON = ResourceLocation.fromNamespaceAndPath("cobblemonpokedexrewards", "textures/gui/reward_icon_hovered.png");
+    private static final ResourceLocation UNHOVERED_ICON = cobblemonResource("textures/gui/pokedex/globe_icon.png");
+    private static final ResourceLocation HOVERED_ICON = ResourceLocation.fromNamespaceAndPath("cobblemonpokedexrewards", "textures/gui/globe_icon_hovered.png");
 
     private static final ResourceLocation TEST_TEXTURE = ResourceLocation.fromNamespaceAndPath("cobblemonpokedexrewards", "textures/gui/test.png");
 
-    private static final int BUTTON_WIDTH = 11;
-    private static final int BUTTON_HEIGHT = 11;
-    private static final int ICON_SIZE = 14;
-    private static final int ICON_X_OFFSET = 2;
-    private static final int ICON_Y_OFFSET = 2;
-    private static final int Z_LEVEL = 100;
-    private static final float ICON_SCALE = 0.5f;
-
-    private final Screen pokedexScreen;
+    private Screen rewardScreen = null;
 
     /**
      * Initialises a new Reward button at the specified coordinates.
@@ -59,18 +50,18 @@ public final class RewardButton extends Button implements PokedexComponent, Clic
      * @param posY The y coordinate for the button.
      */
 
-    public RewardButton(int posX, int posY, Screen previousScreen) {
+    public PokedexButton(int posX, int posY, Screen previousScreen) {
         super(
                 posX,
                 posY,
-                BUTTON_WIDTH,
-                BUTTON_HEIGHT,
+                11,
+                11,
                 Component.empty(),
                 btn -> ((Clickable) btn).onClick(),
                 (button) -> Component.empty()
         );
 
-        this.pokedexScreen = previousScreen;
+        this.rewardScreen = previousScreen;
 
     }
 
@@ -121,30 +112,26 @@ public final class RewardButton extends Button implements PokedexComponent, Clic
 
         ResourceLocation activeIcon = (this.isHovered) ? HOVERED_ICON : UNHOVERED_ICON;
 
-        context.pose().pushPose();
-        context.pose().translate(0, 0, Z_LEVEL);
-
         GuiUtilsKt.blitk(
                 context.pose(),
                 activeIcon,
-                (posX + ICON_X_OFFSET) / ICON_SCALE,
-                (posY + ICON_Y_OFFSET) / ICON_SCALE,
-                ICON_SIZE,
-                ICON_SIZE,
+                (posX) / .5f,
+                (posY) / .5f,
+                14,
+                14,
                 0,
                 0,
-                ICON_SIZE,
-                ICON_SIZE,
+                14,
+                14,
                 0,
                 1,
                 1,
                 1,
                 1f,
                 true,
-                ICON_SCALE
+                .5f
         );
 
-        context.pose().popPose();
     }
 
         /**
@@ -156,7 +143,7 @@ public final class RewardButton extends Button implements PokedexComponent, Clic
      */
 
     @TestOnly
-    private void renderClickableArea(GuiGraphics context, int posX, int posY){
+    public void renderClickableArea(GuiGraphics context, int posX, int posY){
 
         context.blit(
                 TEST_TEXTURE,
@@ -164,8 +151,8 @@ public final class RewardButton extends Button implements PokedexComponent, Clic
                 posY,
                 0,
                 0,
-                BUTTON_WIDTH,
-                BUTTON_HEIGHT,
+                14,
+                14,
                 16,
                 16
         );
@@ -181,25 +168,21 @@ public final class RewardButton extends Button implements PokedexComponent, Clic
                 SimpleSoundInstance.forUI(CobblemonSounds.POKEDEX_CLICK_SHORT, 1.0f)
         );
 
-        logClick(" Reward Button clicked at {}", TimeUtils.getFormattedCurrentTime());
+        logClick("Pokedex Button clicked at {}", TimeUtils.getFormattedCurrentTime());
 
-        /*
-        We need to open the screen here, preferable it will be the same as the cobblemon Pokédex
-        Then we will need to ensure the Pokédex screen is empty.
-         */
-
-        openRewardScreen();
+        openPokedexScreen();
 
     }
 
-    private void openRewardScreen() {
-        Minecraft mc = Minecraft.getInstance();
-        mc.setScreen(new RewardsScreen(pokedexScreen));
+
+    /**
+    This function opens the Pokédex screen from the previous screen we passed down which should always be the Pokédex.
+     */
+
+    private void openPokedexScreen() {
+
+        Minecraft.getInstance().setScreen(rewardScreen);
+
     }
-
-
-
-
-
 
 }
