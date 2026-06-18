@@ -38,16 +38,16 @@ public class RewardSlot extends ScrollingWidget.Slot<RewardSlot> {
 
     private final ResourceLocation slotHovered = cobblemonResource("textures/gui/pokedex/slot_select.png");
 
-
     private int x = 0;
 
     private int y = 0;
 
+    private final boolean largerIcons;
 
 
-
-    public RewardSlot(List<RewardEntry> rewardsInThisRow) {
+    public RewardSlot(List<RewardEntry> rewardsInThisRow, boolean largerIcons) {
         this.rowRewards = rewardsInThisRow;
+        this.largerIcons = largerIcons;
     }
 
     @Override
@@ -65,30 +65,31 @@ public class RewardSlot extends ScrollingWidget.Slot<RewardSlot> {
             int posX = x + ((SCROLL_SLOT_SPACING + SCROLL_SLOT_SIZE) * i);
             int posY = y + SCROLL_SLOT_SPACING + 1;
 
-            renderIcon(context, posX, posY);
+            renderIcon(context, posX, posY, largerIcons);
 
             if (i == hoveredColumn) {
-                System.out.println("Hovered over: " + rowRewards.get(i).getName());
-
                 renderHoveredIcon(context, posX, posY);
             }
         }
 
     }
 
-    private void renderIcon(GuiGraphics context, int posX, int posY) {
+    private void renderIcon(GuiGraphics context, int posX, int posY, boolean largerIcons) {
+
+
+        int iconSize = largerIcons ? SCROLL_SLOT_SIZE + 1 : SCROLL_SLOT_SIZE;
 
         GuiUtilsKt.blitk(
                 context.pose(),
                 slot,
                 (posX),
                 (posY),
-                SCROLL_SLOT_SIZE,
-                SCROLL_SLOT_SIZE,
+                iconSize,
+                iconSize,
                 0,
                 0,
-                SCROLL_SLOT_SIZE,
-                SCROLL_SLOT_SIZE,
+                iconSize,
+                iconSize,
                 0,
                 1,
                 1,
@@ -100,6 +101,8 @@ public class RewardSlot extends ScrollingWidget.Slot<RewardSlot> {
 
     }
 
+
+    // TODO: LARGER ICON CHECK
     private void renderHoveredIcon(GuiGraphics context, int posX, int posY) {
 
         GuiUtilsKt.blitk(
@@ -135,7 +138,7 @@ public class RewardSlot extends ScrollingWidget.Slot<RewardSlot> {
 
             RewardEntry clickedReward = rowRewards.get(hoverIndex);
 
-            System.out.println("Clicked on: " + clickedReward.getName());
+//            System.out.println("Clicked on: " + clickedReward.getName());
 
             Minecraft.getInstance().getSoundManager().play(
                     SimpleSoundInstance.forUI(CobblemonSounds.POKEDEX_CLICK, 1.0F)

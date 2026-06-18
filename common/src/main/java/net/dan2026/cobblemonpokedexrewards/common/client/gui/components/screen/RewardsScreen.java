@@ -17,7 +17,6 @@ import com.cobblemon.mod.common.client.gui.pokedex.PokedexGUIConstants;
 import com.cobblemon.mod.common.client.pokedex.PokedexType;
 import com.cobblemon.mod.common.item.PokedexItem;
 import net.dan2026.cobblemonpokedexrewards.common.client.gui.components.buttons.PokedexButton;
-import net.dan2026.cobblemonpokedexrewards.common.client.gui.components.buttons.RewardButton;
 import net.dan2026.cobblemonpokedexrewards.common.client.gui.components.text.Title;
 import net.dan2026.cobblemonpokedexrewards.common.client.gui.components.widget.RewardsScrollingWidget;
 import net.dan2026.cobblemonpokedexrewards.common.data.RewardEntry;
@@ -32,11 +31,14 @@ import com.cobblemon.mod.common.client.gui.pokedex.PokedexGUI;
 
 import java.util.List;
 
+import static com.cobblemon.mod.common.util.MiscUtilsKt.cobblemonResource;
+
 
 public class RewardsScreen extends Screen {
 
-    private static final ResourceLocation POKEDEX_BACKGROUND = ResourceLocation.fromNamespaceAndPath("cobblemon", "textures/gui/pokedex/pokedex_screen.png");
+    private static final ResourceLocation POKEDEX_BACKGROUND = cobblemonResource("textures/gui/pokedex/pokedex_screen.png");
     private static final ResourceLocation REWARD_ICON = ResourceLocation.fromNamespaceAndPath("cobblemonpokedexrewards", "textures/gui/reward_icon.png");
+    private static final ResourceLocation POKEDEX_OVERLAY = ResourceLocation.fromNamespaceAndPath("cobblemonpokedexrewards", "textures/gui/bar_overlay.png");
 
     private PokedexType pokedexType = PokedexType.RED;
 
@@ -64,6 +66,7 @@ public class RewardsScreen extends Screen {
 
         renderTitle(context, posX, posY);
 
+        renderBar(context, posX, posY);
 
         super.render(context, mouseX, mouseY, delta);
     }
@@ -201,6 +204,30 @@ public class RewardsScreen extends Screen {
 
         title.render(context, this.width, this.height);
 
+    }
+
+
+    private void renderBar(GuiGraphics context, int posX, int posY){
+
+        GuiUtilsKt.blitk(
+                context.pose(),
+                POKEDEX_OVERLAY,
+                (posX + 26),
+                (posY + 28),
+                PokedexGUIConstants.HALF_OVERLAY_HEIGHT,
+                PokedexGUIConstants.HALF_OVERLAY_WIDTH,
+                0,
+                0,
+                PokedexGUIConstants.HALF_OVERLAY_WIDTH,
+                PokedexGUIConstants.HALF_OVERLAY_HEIGHT,
+                0,
+                1,
+                1,
+                1,
+                1f,
+                true,
+                1f
+        );
     }
 
 

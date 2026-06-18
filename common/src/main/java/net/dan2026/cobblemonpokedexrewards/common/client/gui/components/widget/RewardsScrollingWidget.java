@@ -18,6 +18,7 @@ import net.dan2026.cobblemonpokedexrewards.common.data.RewardEntry;
 import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.util.FastColor;
 import net.minecraft.util.Mth;
+import net.minecraft.world.entity.TraceableEntity;
 import org.jetbrains.annotations.NotNull;
 
 import java.util.List;
@@ -47,6 +48,10 @@ public class RewardsScrollingWidget extends ScrollingWidget<RewardSlot> {
 
     public void createEntries(List<RewardEntry> allRewards) {
 
+        System.out.println(allRewards.size());
+
+        boolean largerIcons = allRewards.size() < 25;
+
         int rowAmount = 5;
 
         for (int i = 0; i < allRewards.size(); i += rowAmount) {
@@ -55,7 +60,7 @@ public class RewardsScrollingWidget extends ScrollingWidget<RewardSlot> {
 
             List<RewardEntry> rewardEntries = allRewards.subList(i, end);
 
-            addEntry(new RewardSlot(rewardEntries));
+            addEntry(new RewardSlot(rewardEntries, largerIcons));
         }
     }
 
