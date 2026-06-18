@@ -259,6 +259,7 @@ public class RewardsScreen extends Screen {
                 new RewardEntry("Test Reward 8", 100, RewardEntry.RewardType.POKEMON, "cobblemon:mewtwo")
         ));
 
+
         this.addRenderableWidget(scrollWidget);
 
 

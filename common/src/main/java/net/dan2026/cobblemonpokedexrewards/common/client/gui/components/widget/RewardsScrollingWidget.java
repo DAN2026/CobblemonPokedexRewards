@@ -22,6 +22,9 @@ import org.jetbrains.annotations.NotNull;
 
 import java.util.List;
 
+import static com.cobblemon.mod.common.client.gui.pokedex.PokedexGUIConstants.SCROLL_SLOT_SIZE;
+import static com.cobblemon.mod.common.client.gui.pokedex.PokedexGUIConstants.SCROLL_SLOT_SPACING;
+
 public class RewardsScrollingWidget extends ScrollingWidget<RewardSlot> {
 
     private final int pX;
@@ -42,9 +45,17 @@ public class RewardsScrollingWidget extends ScrollingWidget<RewardSlot> {
         this.pY = pY;
     }
 
-    public void createEntries(List<RewardEntry> rewards) {
-        for (RewardEntry reward : rewards) {
-            addEntry(new RewardSlot(reward));
+    public void createEntries(List<RewardEntry> allRewards) {
+
+        int rowAmount = 5;
+
+        for (int i = 0; i < allRewards.size(); i += rowAmount) {
+
+            int end = Math.min(i + 5, allRewards.size());
+
+            List<RewardEntry> rewardEntries = allRewards.subList(i, end);
+
+            addEntry(new RewardSlot(rewardEntries));
         }
     }
 
@@ -55,12 +66,14 @@ public class RewardsScrollingWidget extends ScrollingWidget<RewardSlot> {
 
     @Override
     protected void renderItem(@NotNull GuiGraphics context, int mouseX, int mouseY, float delta, int index, int x, int y, int entryWidth, int entryHeight) {
+
         RewardSlot slot = this.getEntry(index);
 
         slot.setX(x);
         slot.setY(y);
 
         slot.render(context, index, y, x, entryWidth, entryHeight, mouseX, mouseY, false, delta);
+
     }
 
     @Override
@@ -70,6 +83,7 @@ public class RewardsScrollingWidget extends ScrollingWidget<RewardSlot> {
 
     @Override
     public void renderScrollbar(@NotNull GuiGraphics context, int mouseX, int mouseY, float delta) {
+
         int xLeft = getScrollbarPosition();
         int xRight = xLeft + 3;
 

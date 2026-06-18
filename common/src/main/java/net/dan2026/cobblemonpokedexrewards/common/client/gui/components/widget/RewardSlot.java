@@ -12,13 +12,18 @@
 
 package net.dan2026.cobblemonpokedexrewards.common.client.gui.components.widget;
 
+import com.cobblemon.mod.common.CobblemonSounds;
 import com.cobblemon.mod.common.api.gui.GuiUtilsKt;
 import com.cobblemon.mod.common.client.gui.ScrollingWidget;
 import net.dan2026.cobblemonpokedexrewards.common.data.RewardEntry;
+import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.GuiGraphics;
+import net.minecraft.client.resources.sounds.SimpleSoundInstance;
 import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceLocation;
 import org.jetbrains.annotations.NotNull;
+
+import java.util.List;
 
 import static com.cobblemon.mod.common.client.gui.pokedex.PokedexGUIConstants.SCROLL_SLOT_SIZE;
 import static com.cobblemon.mod.common.client.gui.pokedex.PokedexGUIConstants.SCROLL_SLOT_SPACING;
@@ -26,17 +31,23 @@ import static com.cobblemon.mod.common.util.MiscUtilsKt.cobblemonResource;
 
 public class RewardSlot extends ScrollingWidget.Slot<RewardSlot> {
 
-    private final RewardEntry reward;
 
-    private final ResourceLocation slotResource = cobblemonResource("textures/gui/pokedex/pokedex_slot.png");
+    private final List<RewardEntry> rowRewards;
+
+    private final ResourceLocation slot = cobblemonResource("textures/gui/pokedex/pokedex_slot.png");
+
+    private final ResourceLocation slotHovered = cobblemonResource("textures/gui/pokedex/slot_select.png");
+
 
     private int x = 0;
 
     private int y = 0;
 
 
-    public RewardSlot(RewardEntry reward) {
-        this.reward = reward;
+
+
+    public RewardSlot(List<RewardEntry> rewardsInThisRow) {
+        this.rowRewards = rewardsInThisRow;
     }
 
     @Override
@@ -48,10 +59,20 @@ public class RewardSlot extends ScrollingWidget.Slot<RewardSlot> {
         between the slots.
          */
 
-        int startPosX = x + ((SCROLL_SLOT_SPACING + SCROLL_SLOT_SIZE) * 0);
-        int startPosY = y + SCROLL_SLOT_SPACING + 1;
+        int hoveredColumn = getHoveredSlotIndex(mouseX, mouseY);
 
-        renderIcon(context, startPosX, startPosY);
+        for (int i = 0; i < rowRewards.size(); i++) {
+            int posX = x + ((SCROLL_SLOT_SPACING + SCROLL_SLOT_SIZE) * i);
+            int posY = y + SCROLL_SLOT_SPACING + 1;
+
+            renderIcon(context, posX, posY);
+
+            if (i == hoveredColumn) {
+                System.out.println("Hovered over: " + rowRewards.get(i).getName());
+
+                renderHoveredIcon(context, posX, posY);
+            }
+        }
 
     }
 
@@ -59,7 +80,7 @@ public class RewardSlot extends ScrollingWidget.Slot<RewardSlot> {
 
         GuiUtilsKt.blitk(
                 context.pose(),
-                slotResource,
+                slot,
                 (posX),
                 (posY),
                 SCROLL_SLOT_SIZE,
@@ -79,13 +100,76 @@ public class RewardSlot extends ScrollingWidget.Slot<RewardSlot> {
 
     }
 
-    @Override
-    public @NotNull Component getNarration() {
-        return Component.literal(reward.getName());
+    private void renderHoveredIcon(GuiGraphics context, int posX, int posY) {
+
+        GuiUtilsKt.blitk(
+                context.pose(),
+                slotHovered,
+                (posX),
+                (posY),
+                SCROLL_SLOT_SIZE,
+                SCROLL_SLOT_SIZE,
+                0,
+                SCROLL_SLOT_SIZE,
+                SCROLL_SLOT_SIZE,
+                SCROLL_SLOT_SIZE * 2,
+                0,
+                1,
+                1,
+                1,
+                1f,
+                true,
+                1f
+        );
+
     }
 
-    public RewardEntry getReward() {
-        return reward;
+
+
+    @Override
+    public boolean mouseClicked(double mouseX, double mouseY, int button) {
+
+        int hoverIndex = getHoveredSlotIndex((int) mouseX, (int) mouseY);
+
+        if (hoverIndex > -1 && hoverIndex < rowRewards.size()) {
+
+            RewardEntry clickedReward = rowRewards.get(hoverIndex);
+
+            System.out.println("Clicked on: " + clickedReward.getName());
+
+            Minecraft.getInstance().getSoundManager().play(
+                    SimpleSoundInstance.forUI(CobblemonSounds.POKEDEX_CLICK, 1.0F)
+            );
+            return true;
+        }
+
+        return false;
+    }
+
+    private int getHoveredSlotIndex(int mouseX, int mouseY) {
+
+        for (int i = 0; i < rowRewards.size(); i++) {
+
+            int startPosX = x + ((SCROLL_SLOT_SPACING + SCROLL_SLOT_SIZE) * i);
+            int startPosY = y + SCROLL_SLOT_SPACING + 1;
+
+            if (mouseX >= startPosX && mouseX <= startPosX + SCROLL_SLOT_SIZE &&
+                    mouseY >= startPosY && mouseY <= startPosY + SCROLL_SLOT_SIZE) {
+                return i;
+            }
+        }
+        return -1;
+    }
+
+    @Override
+    public @NotNull Component getNarration() {
+
+        String narration = rowRewards.stream()
+                .map(RewardEntry::getName)
+                .reduce((name1, name2) -> name1 + ", " + name2)
+                .orElse("Empty Row");
+
+        return Component.literal(narration);
     }
 
     public int getX() {
